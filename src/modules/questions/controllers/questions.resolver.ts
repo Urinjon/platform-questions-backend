@@ -7,12 +7,13 @@ export class QuestionsResolver {
   constructor(private readonly questionsService: QuestionsService) {}
 
   @Query(() => [QuestionType], { name: 'questions' }) 
-  findAll() {
-    return this.questionsService.findAll();
+  public async findAll() {
+    return await this.questionsService.getAllQuestions();
   }
 
-  @Query(() => QuestionType, { name: 'question' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.questionsService.findOne(id);
+  @Query(() => QuestionType, { name: 'question', nullable: true })
+  public async findOne(@Args('id', { type: () => Int }) id: string): Promise<QuestionType | null> {
+    const foundQuestion = await this.questionsService.findQuestion(id);
+    return foundQuestion;
   }
 }

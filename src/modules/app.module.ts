@@ -1,16 +1,24 @@
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+
 import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
+
 import { QuestionsModule } from './questions/questions.module';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { GraphQLModule } from '@nestjs/graphql';
+
+
+
+
 
 
 @Module({
   imports: [
+  
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: 'src/schema.gql', // Path to the generated schema file
-      sortSchema: true, // Sorts the generated schema lexicographically
+      autoSchemaFile: 'src/modules/questions/dto/schema.gql', 
+      sortSchema: true,
     }),
+
     QuestionsModule,
   ],
   controllers: [],
