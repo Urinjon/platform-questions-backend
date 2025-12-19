@@ -1,0 +1,13 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Query {
+  question(id: Int!): QuestionType!
+  questions: [QuestionType!]!
+}
+
+type QuestionType {
+  id: ID!
+  title: String!
+}
