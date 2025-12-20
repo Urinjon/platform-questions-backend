@@ -3,3 +3,6 @@ package.lock.json
 bun.lock
 dist
 build
+/generated/prisma
+
+/generated/prisma

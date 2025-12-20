@@ -12,7 +12,7 @@ export class QuestionsResolver {
   }
 
   @Query(() => QuestionType, { name: 'question', nullable: true })
-  public async findOne(@Args('id', { type: () => Int }) id: string): Promise<QuestionType | null> {
+  public async findOne(@Args('id', { type: () => String }) id: string): Promise<QuestionType | null> {
     const foundQuestion = await this.questionsService.findQuestion(id);
     return foundQuestion;
   }

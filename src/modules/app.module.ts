@@ -4,6 +4,9 @@ import { Module } from '@nestjs/common';
 import { QuestionsModule } from './questions/questions.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { GraphQLModule } from '@nestjs/graphql';
+import { PrismaModule } from 'src/prisma/prisma.module';
+import { ConfigModule } from '@nestjs/config';
+import configuration from 'src/config/configuration';
 
 
 
@@ -12,6 +15,10 @@ import { GraphQLModule } from '@nestjs/graphql';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true, // Делаем конфиг доступным везде
+      envFilePath: '.env', // Указываем .env файл
+    }),
   
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -19,6 +26,7 @@ import { GraphQLModule } from '@nestjs/graphql';
       sortSchema: true,
     }),
 
+    PrismaModule,
     QuestionsModule,
   ],
   controllers: [],
