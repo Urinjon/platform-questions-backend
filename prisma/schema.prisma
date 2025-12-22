@@ -14,7 +14,16 @@ model User {
   password       String
   role           UserRole
   createdAt      DateTime        @default(now())
+  refreshTokens  RefreshToken[]
   studentProfile StudentProfile?
+}
+
+model RefreshToken {
+  id        Int      @id @default(autoincrement())
+  token     String   @unique
+  userId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model StudentProfile {

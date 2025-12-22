@@ -9,6 +9,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 
 
 import { GraphQLModule } from '@nestjs/graphql';
+import { AuthModule } from './auth/auth.module';
 
 
 
@@ -28,6 +29,7 @@ import { GraphQLModule } from '@nestjs/graphql';
     PrismaModule,
     UsersModule,
     QuestionsModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
