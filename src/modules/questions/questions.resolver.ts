@@ -1,6 +1,7 @@
-import { Args, Int, Query, Resolver } from '@nestjs/graphql';
-import { QuestionType } from '../dto/question.dto';
-import { QuestionsService } from '../services/questions.service';
+import { Args, Query, Resolver } from '@nestjs/graphql';
+import { QuestionType } from './dto/question.dto';
+import { QuestionsService } from './questions.service';
+
 
 @Resolver(() => QuestionType) 
 export class QuestionsResolver {

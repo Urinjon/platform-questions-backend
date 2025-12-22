@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { QuestionType } from "../dto/question.dto";
+
 import { PrismaService } from "src/config/prisma/prisma.service";
+import { QuestionType } from "./dto/question.dto";
 
 
 

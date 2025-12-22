@@ -1,15 +1,12 @@
 // src/modules/user/user.mapper.ts
 import { Injectable } from "@nestjs/common";
-import { User, StudentProfile } from "generated/prisma/client";
-import { UserDto } from "./users.dto";
 
-type UserWithProfile = User & {
-  studentProfile?: StudentProfile | null;
-};
+import { UserWithProfileModel } from "./users.model";
+import { UserType } from "./dto/users.dto";
 
 @Injectable()
 export class UsersMapper {
-  public toDto(user: UserWithProfile): UserDto {
+  toGraphQL(user: UserWithProfileModel): UserType {
     return {
       id: user.id,
       email: user.email,
@@ -26,7 +23,7 @@ export class UsersMapper {
     };
   }
 
-  public toDtos(users: UserWithProfile[]): UserDto[] {
-    return users.map((u) => this.toDto(u));
+  toGraphQLList(users: UserWithProfileModel[]): UserType[] {
+    return users.map((u) => this.toGraphQL(u));
   }
 }
