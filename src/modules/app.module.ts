@@ -2,11 +2,9 @@
 import { Module } from '@nestjs/common';
 
 import { QuestionsModule } from './questions/questions.module';
-import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { GraphQLModule } from '@nestjs/graphql';
-import { PrismaModule } from 'src/prisma/prisma.module';
+import { PrismaModule } from 'src/config/prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
-import configuration from 'src/config/configuration';
+import { UsersModule } from './users/users.module';
 
 
 
@@ -16,17 +14,12 @@ import configuration from 'src/config/configuration';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // Делаем конфиг доступным везде
-      envFilePath: '.env', // Указываем .env файл
+      isGlobal: true, 
+      envFilePath: '.env', 
     }),
   
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: 'src/modules/questions/dto/schema.gql', 
-      sortSchema: true,
-    }),
-
     PrismaModule,
+    UsersModule,
     QuestionsModule,
   ],
   controllers: [],

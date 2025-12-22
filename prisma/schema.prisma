@@ -1,6 +1,6 @@
 generator client {
   provider     = "prisma-client"
-  output       = "./generated/prisma"
+  output       = "../generated/prisma"
   moduleFormat = "cjs"
 }
 
@@ -9,9 +9,48 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String          @id @default(uuid())
+  email          String          @unique
+  password       String
+  role           UserRole
+  createdAt      DateTime        @default(now())
+  studentProfile StudentProfile?
+}
+
+model StudentProfile {
+  id         String   @id @default(uuid())
+  lastName   String
+  phone      String
+  birthDate  DateTime
+  university String
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Question {
+  id          String           @id @default(uuid())
+  title       String
+  description String?
+  type        QuestionType
+  isActive    Boolean          @default(true)
+  createdAt   DateTime         @default(now())
+  options     QuestionOption[]
+}
+
+model QuestionOption {
+  id         String   @id @default(uuid())
+  text       String
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id])
+}
+
+enum UserRole {
+  ADMIN
+  STUDENT
+}
+
+enum QuestionType {
+  TEXT
+  SINGLE
+  MULTIPLE
 }

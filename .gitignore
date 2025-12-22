@@ -6,3 +6,9 @@ build
 /generated/prisma
 
 /generated/prisma
+
+.env
+.env.lock
+
+generated/
+.vscode

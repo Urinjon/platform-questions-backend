@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { QuestionType } from "../dto/question.dto";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "src/config/prisma/prisma.service";
 
 
 
@@ -29,15 +29,6 @@ export class QuestionsService {
   }
 
   public async getAllQuestions(): Promise<QuestionType[]> {
-    const users = await this.prisma.user.findMany({
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        createdAt: true,
-      },
-    });
-    console.log(users);
     return this.question;
   }
 
