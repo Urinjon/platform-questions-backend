@@ -1,7 +1,7 @@
 // src/auth/refresh-token.service.ts
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { PrismaService } from 'src/config/prisma/prisma.service';
+import { PrismaService } from 'src/modules/common/prisma/prisma.service';
 
 
 @Injectable()

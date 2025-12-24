@@ -1,6 +1,8 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient, UserRole } from "../generated/prisma/client";
 
+import * as bcrypt from 'bcrypt';
+
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL!,
 });
@@ -14,7 +16,7 @@ async function main() {
     update: {},
     create: {
       email: "admin@example.com",
-      password: "hashed-password", // ❗ в реале хэш
+      password: bcrypt.hashSync("hashed-password", 10), // ❗ в реале хэш
       role: UserRole.ADMIN,
     },
   });
@@ -25,7 +27,7 @@ async function main() {
     update: {},
     create: {
       email: "student@example.com",
-      password: "hashed-password",
+      password: bcrypt.hashSync("hashed-password", 10),
       role: UserRole.STUDENT,
       studentProfile: {
         create: {

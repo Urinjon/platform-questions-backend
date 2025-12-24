@@ -4,7 +4,7 @@ import { Prisma } from "generated/prisma/client";
 
 
 
-import { PrismaService } from "src/config/prisma/prisma.service";
+import { PrismaService } from "src/modules/common/prisma/prisma.service";
 
 
 @Injectable()

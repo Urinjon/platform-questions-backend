@@ -2,8 +2,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { PrismaService } from 'src/config/prisma/prisma.service';
+import { PrismaService } from 'src/modules/common/prisma/prisma.service';
 import { RefreshTokenService } from './refresh-token.service';
+import { LoginResDto } from './auth.dto';
+import { UserWithProfileModel } from '../users/users.model';
+import { AuthUserPayload } from './auth.model';
+
+
 
 
 @Injectable()
@@ -14,11 +19,12 @@ export class AuthService {
     private refreshTokenService: RefreshTokenService,
   ) {}
 
-  async validateUser(email: string, password: string) {
+  async validateUser(email: string, password: string): Promise<UserWithProfileModel | null> {
     const user = await this.prisma.user.findUnique({
       where: { email },
       include: { studentProfile: true }, // подгружаем профиль
     });
+    console.log(user)
 
     if (!user) return null;
 
@@ -28,32 +34,37 @@ export class AuthService {
     return user;
   }
 
-  async login(user: any) {
+  public async login(user: AuthUserPayload): Promise<LoginResDto> {
     const payload = { sub: user.id, email: user.email, role: user.role };
     const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });
     const refreshToken = await this.refreshTokenService.createToken(user.id);
 
     return {
       accessToken,
-      refreshToken,
-      user: {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-        studentProfile: user.studentProfile || null,
-      },
+      refreshToken
     };
   }
 
-  async refresh(refreshToken: string) {
+  async refresh(refreshToken: string): Promise<LoginResDto> {
     const tokenData = await this.refreshTokenService.verifyToken(refreshToken);
-    if (!tokenData) throw new UnauthorizedException('Invalid refresh token');
+    if (!tokenData) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
 
     const user = await this.prisma.user.findUnique({
       where: { id: tokenData.userId },
-      include: { studentProfile: true },
+      select: {
+        id: true,
+        email: true,
+        role: true,
+      },
     });
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
 
     return this.login(user);
   }
+
 }

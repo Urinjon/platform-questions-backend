@@ -2,7 +2,7 @@
 import { Module } from '@nestjs/common';
 
 import { QuestionsModule } from './questions/questions.module';
-import { PrismaModule } from 'src/config/prisma/prisma.module';
+import { PrismaModule } from 'src/modules/common/prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
