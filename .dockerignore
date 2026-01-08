@@ -5,9 +5,8 @@ dist
 build
 /generated/prisma
 
-/generated/prisma
 
-.env
+
 .env.lock
 
 generated/

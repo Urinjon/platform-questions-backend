@@ -1,5 +1,6 @@
 # Platform questions backend
-
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
 
 
 # API description:

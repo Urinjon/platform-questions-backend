@@ -5,6 +5,7 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "module": "commonjs",
   "scripts": {
     "build": "nest build",
     "format": "prettier --check \"src/**/*.ts\"",
@@ -23,6 +24,7 @@
     "knip": "knip"
   },
   "dependencies": {
+    "@apollo/gateway": "^2.12.2",
     "@apollo/server": "^5.2.0",
     "@as-integrations/express5": "^1.1.2",
     "@nestjs/apollo": "^13.2.3",
@@ -72,6 +74,7 @@
     "prisma": "^7.2.0",
     "source-map-support": "^0.5.21",
     "ts-jest": "^29.4.6",
+    "ts-morph": "^27.0.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.9.3",

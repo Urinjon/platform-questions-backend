@@ -1,3 +1,5 @@
+// import { PrismaClient } from "@generated/prisma/client";
+
 import { PrismaClient } from "@generated/prisma/client";
 import { Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";

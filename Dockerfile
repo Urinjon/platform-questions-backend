@@ -32,18 +32,21 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 
-
+# Копируем prisma + env
 COPY prisma ./prisma
+COPY .env .env
 
 
-RUN npx prisma generate
 
-
+# Копируем остальной код
 COPY . .
 
-
+RUN npx prisma generate
 RUN npm run build
 
 EXPOSE 8000
 
+
 CMD ["npm", "run", "start:prod"]
+
+

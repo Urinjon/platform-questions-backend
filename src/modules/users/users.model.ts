@@ -1,4 +1,4 @@
-import { StudentProfile, User } from "generated/prisma/client";
+import { StudentProfile, User } from "@generated/prisma/client";
 
 export type UserModel = User;
 

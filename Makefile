@@ -38,3 +38,20 @@ test:
 	bun run test:e2e
 	bun run build
 	bun run knip 
+
+
+#docker build --no-cache -t p-q . 	
+pre-prod: 
+	docker rm -f p-q || true
+	docker build -t p-q .
+	docker run -t p-q
+
+dashboard:
+	bunx prisma studio
+
+
+
+test-prisma:
+	npx prisma generate
+	npm run build
+	npm run start:prod
