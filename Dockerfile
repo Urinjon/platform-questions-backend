@@ -2,30 +2,7 @@
 
 
 
-# FROM node:24-alpine
 
-# WORKDIR /usr/src/app
-
-
-# COPY package*.json ./
-# RUN npm install
-
-# # Копируем prisma + env
-# COPY prisma ./prisma
-
-
-
-
-# # Копируем остальной код
-# COPY . .
-
-# RUN npx prisma generate
-# RUN npm run build
-
-# EXPOSE 8000
-
-
-# CMD ["npm", "run", "start:prod"]
 
 
 # Stage 1: builder
@@ -44,6 +21,8 @@ ARG DATABASE_URL
 # Prisma видит env на этапе генерации
 ENV DATABASE_URL=${DATABASE_URL}
 
+
+
 RUN npx prisma generate
 RUN npm run build
 
@@ -55,6 +34,7 @@ WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/dist ./dist
 COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY package*.json ./
+
 
 EXPOSE 8000
 CMD ["npm", "run", "start:prod"]

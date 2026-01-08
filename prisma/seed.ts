@@ -8,9 +8,13 @@ import { PrismaClient, UserRole } from "../generated/prisma/client";
 
 import * as bcrypt from 'bcrypt';
 
+const DATABASE_URL = process.env.DATABASE_URL;
+
 const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
+  connectionString: DATABASE_URL,
 });
+
+console.log(DATABASE_URL)
 
 const prisma = new PrismaClient({ adapter });
 
