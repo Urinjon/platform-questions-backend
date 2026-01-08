@@ -27,7 +27,7 @@ jobs:
 
       # 4  Генерация prisma client
       - name: Generate prisma client
-        run: npx prisma generate
+        run: DATABASE_URL="postgresql://admin:123456@localhost:5432/postgres?schema=public" npx prisma generate
 
       # 4️⃣ Lint
       - name: Lint
