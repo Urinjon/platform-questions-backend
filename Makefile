@@ -33,4 +33,8 @@ seed:
 
 
 test:
-	npm run test:e2e 
+	bun run lint
+	bun run format:fix
+	bun run test:e2e
+	bun run build
+	bun run knip 

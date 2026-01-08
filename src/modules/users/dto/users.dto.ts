@@ -1,9 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
 import { StudentType } from "./students.dto";
 
-
-
-
 @ObjectType()
 export class UserType {
   @Field(() => ID)
@@ -21,6 +18,3 @@ export class UserType {
   @Field(() => StudentType, { nullable: true })
   student?: StudentType;
 }
-
-
-

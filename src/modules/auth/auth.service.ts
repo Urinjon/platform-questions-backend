@@ -1,19 +1,18 @@
 // src/auth/auth.service.ts
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
-import { PrismaService } from 'src/modules/common/prisma/prisma.service';
-import { RefreshTokenService } from './refresh-token.service';
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import * as bcrypt from "bcrypt";
 
-import { UserWithProfileModel } from '../users/users.model';
-import { AuthUserPayload } from './auth.model';
+import { RefreshTokenService } from "./refresh-token.service";
 
+import { UserWithProfileModel } from "../users/users.model";
+import { AuthUserPayload, TokenPayload } from "./auth.model";
+import { PrismaService } from "../common/prisma/prisma.service";
 
 class LoginResDto {
   accessToken: string;
   refreshToken: string;
 }
-
 
 @Injectable()
 export class AuthService {
@@ -23,12 +22,14 @@ export class AuthService {
     private refreshTokenService: RefreshTokenService,
   ) {}
 
-  async validateUser(email: string, password: string): Promise<UserWithProfileModel | null> {
+  async validateUser(
+    email: string,
+    password: string,
+  ): Promise<UserWithProfileModel | null> {
     const user = await this.prisma.user.findUnique({
       where: { email },
-      include: { studentProfile: true }, 
+      include: { studentProfile: true },
     });
-
 
     if (!user) return null;
 
@@ -39,8 +40,12 @@ export class AuthService {
   }
 
   public async login(user: AuthUserPayload): Promise<LoginResDto> {
-    const payload = { sub: user.id, email: user.email, role: user.role };
-    const accessToken = this.jwtService.sign(payload, { expiresIn: '15m' });
+    const payload: TokenPayload = {
+      sub: user.id,
+      email: user.email,
+      role: user.role,
+    };
+    const accessToken = this.jwtService.sign(payload, { expiresIn: "15m" });
     const refreshToken = await this.refreshTokenService.createToken(user.id);
 
     return {
@@ -52,7 +57,7 @@ export class AuthService {
   async refresh(refreshToken: string): Promise<LoginResDto> {
     const tokenData = await this.refreshTokenService.verifyToken(refreshToken);
     if (!tokenData) {
-      throw new UnauthorizedException('Invalid refresh token');
+      throw new UnauthorizedException("Invalid refresh token");
     }
 
     const user = await this.prisma.user.findUnique({
@@ -65,10 +70,9 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException("User not found");
     }
 
     return this.login(user);
   }
-
 }

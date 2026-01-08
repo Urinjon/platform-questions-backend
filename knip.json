@@ -6,5 +6,9 @@
   },
   "tags": [
     "-lintignore"
+  ],
+  "ignore": [
+    "prisma/seed.ts",
+    ".github/*"
   ]
 }

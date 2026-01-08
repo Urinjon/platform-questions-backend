@@ -1,18 +1,13 @@
 import { Injectable } from "@nestjs/common";
 
-import { PrismaService } from "src/modules/common/prisma/prisma.service";
 import { QuestionType } from "./dto/question.dto";
-
-
+import { PrismaService } from "../common/prisma/prisma.service";
 
 @Injectable()
 export class QuestionsService {
   private readonly question: QuestionType[];
 
-
-  constructor(
-    private readonly prisma: PrismaService
-  ) {
+  constructor(private readonly prisma: PrismaService) {
     this.question = [
       {
         id: "1",
@@ -25,16 +20,16 @@ export class QuestionsService {
       {
         id: "3",
         title: "Question 3",
-      }
+      },
     ];
   }
 
   public async getAllQuestions(): Promise<QuestionType[]> {
-    return this.question;
+    return await this.prisma.question.findMany();
   }
 
   public async findQuestion(id: string): Promise<QuestionType | null> {
-    const found = this.question.find((question) => question.id === id);
+    const found = await this.prisma.question.findUnique({ where: { id } });
     if (!found) return null;
     return found;
   }

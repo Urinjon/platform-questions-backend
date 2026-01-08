@@ -1,16 +1,16 @@
-import { Injectable } from '@nestjs/common';
-import { Response, Request } from 'express';
+import { Injectable } from "@nestjs/common";
+import { Response, Request } from "express";
 
 @Injectable()
 export class AuthCookiesService {
-  private readonly REFRESH_TOKEN_COOKIE = 'refreshToken';
+  private readonly REFRESH_TOKEN_COOKIE = "refreshToken";
 
   private get baseOptions() {
     return {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict' as const,
-      path: '/auth/refresh',
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict" as const,
+      path: "/auth/refresh",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     };
   }
@@ -25,7 +25,11 @@ export class AuthCookiesService {
     });
   }
 
-  public getRefreshToken(req: Request): string | undefined {
-    return req.cookies?.[this.REFRESH_TOKEN_COOKIE];
+  public getRefreshToken(req: Request): string | null {
+    const refreshToken: string = String(req.cookies[this.REFRESH_TOKEN_COOKIE]);
+
+    if (!refreshToken) return null;
+
+    return refreshToken;
   }
 }
