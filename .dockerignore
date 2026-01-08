@@ -1,0 +1,16 @@
+node_modules
+package.lock.json
+bun.lock
+dist
+build
+/generated/prisma
+
+/generated/prisma
+
+.env
+.env.lock
+
+generated/
+.vscode
+
+schema.gql
