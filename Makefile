@@ -40,11 +40,19 @@ test:
 	bun run knip 
 
 
-#docker build --no-cache -t p-q . 	
-pre-prod: 
+#docker build --no-cache -t p-q . 
+# 	docker build --build-arg DATABASE_URL="postgresql://admin:123456@localhost:5432/postgres?schema=public" -t p-q .
+# 	docker run -e DATABASE_URL="postgresql://admin:123456@localhost:5432/postgres?schema=public" -p 8000:8000 p-q	
+pre-prod:
 	docker rm -f p-q || true
-	docker build -t p-q .
-	docker run -t p-q
+
+	docker build \
+	  --build-arg DATABASE_URL="postgresql://admin:123456@localhost:5432/postgres?schema=public" \
+	  -t p-q \
+	  .
+	  
+	docker run --env-file .env -p 8000:8000 p-q
+
 
 dashboard:
 	bunx prisma studio
