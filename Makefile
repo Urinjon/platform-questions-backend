@@ -33,7 +33,7 @@ seed:
 
 
 test:
-	bun run lint
+	bun run lint:fix
 	bun run format:fix
 	bun run test:e2e
 	bun run build
