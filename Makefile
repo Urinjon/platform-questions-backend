@@ -1,4 +1,4 @@
-
+.PHONY: dev setup db migration seed test
 
 dev: 
 	bun run start:dev
@@ -30,3 +30,7 @@ migration:
 
 seed:
 	bun run prisma/seed.ts
+
+
+test:
+	npm run test:e2e 

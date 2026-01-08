@@ -4,11 +4,15 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/modules/common/prisma/prisma.service';
 import { RefreshTokenService } from './refresh-token.service';
-import { LoginResDto } from './auth.dto';
+
 import { UserWithProfileModel } from '../users/users.model';
 import { AuthUserPayload } from './auth.model';
 
 
+class LoginResDto {
+  accessToken: string;
+  refreshToken: string;
+}
 
 
 @Injectable()
@@ -22,9 +26,9 @@ export class AuthService {
   async validateUser(email: string, password: string): Promise<UserWithProfileModel | null> {
     const user = await this.prisma.user.findUnique({
       where: { email },
-      include: { studentProfile: true }, // подгружаем профиль
+      include: { studentProfile: true }, 
     });
-    console.log(user)
+
 
     if (!user) return null;
 
@@ -41,7 +45,7 @@ export class AuthService {
 
     return {
       accessToken,
-      refreshToken
+      refreshToken,
     };
   }
 

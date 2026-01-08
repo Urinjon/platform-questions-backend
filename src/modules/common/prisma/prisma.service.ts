@@ -10,7 +10,7 @@ export class PrismaService extends PrismaClient {
     private readonly configService: ConfigService
   ) {
     const connectionString = configService.get<string>('DATABASE_URL')
-    console.log(connectionString)
+   
     const adapter = new PrismaPg({ connectionString })
 
     super({adapter})
